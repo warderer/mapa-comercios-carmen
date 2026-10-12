@@ -11,7 +11,7 @@ export const state = {
   dur: 1100,          // milisegundos por año al reproducir
   playing: false,
   timer: null,
-  source: "sample",   // "sample" | "csv"
+  source: "denue",    // "denue" | "csv"
   selected: null,     // key del comercio seleccionado
 };
 

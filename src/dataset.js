@@ -1,4 +1,4 @@
-// Carga de un conjunto de datos en el mapa (el de ejemplo o un CSV).
+// Carga de un conjunto de datos en el mapa (el del DENUE o un CSV).
 import { AREA, LOCALE, PALETTE } from "./config.js";
 import { fit } from "./map.js";
 import { clearMarkers } from "./markers.js";
@@ -17,7 +17,7 @@ export function setMsg(text, isError) {
 
 const outsideArea = r => r.lat < AREA.minLat || r.lat > AREA.maxLat || r.lng < AREA.minLng || r.lng > AREA.maxLng;
 
-// `source` es "sample" o "csv"; `info` = {name, bad} describe el CSV cargado
+// `source` es "denue" o "csv"; `info` = {name, bad} describe el CSV cargado
 export function loadRows(rows, source, info = {}) {
   stopPlay();
   state.rows = rows;
@@ -36,9 +36,9 @@ export function loadRows(rows, source, info = {}) {
   const slider = $("yr");
   slider.max = state.years.length - 1;
   slider.value = 0;
-  $("srcline").innerHTML = source === "sample"
-    ? 'Mostrando datos de ejemplo<span class="tag">simulados</span>. Sube tu CSV para ver los tuyos.'
-    : "Mostrando <b>" + esc(info.name) + "</b>: " + rows.length.toLocaleString(LOCALE) + " registros, " + state.years[0] + "–" + state.years[state.years.length - 1] + ".";
+  $("srcline").innerHTML = "Mostrando <b>" + esc(source === "denue" ? "DENUE (INEGI)" : info.name) + "</b>: " +
+    rows.length.toLocaleString(LOCALE) + " registros, " + state.years[0] + "–" + state.years[state.years.length - 1] + "." +
+    (source === "denue" ? " Sube un CSV para ver otros datos." : "");
 
   const warnings = [];
   if (info.bad) warnings.push(info.bad + " filas omitidas por año o coordenadas inválidas");

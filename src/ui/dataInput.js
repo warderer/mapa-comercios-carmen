@@ -1,8 +1,18 @@
-// Entrada de datos: subir un CSV, arrastrarlo sobre la página, pegarlo o volver al ejemplo.
+// Entrada de datos: subir un CSV, arrastrarlo sobre la página, pegarlo o volver a los datos del DENUE.
 import { rowsFromCSV } from "../data/csv.js";
-import { sample } from "../data/sample.js";
+import { loadDenue } from "../data/denue.js";
 import { loadRows, setMsg } from "../dataset.js";
 import { $ } from "../utils/dom.js";
+
+// Carga en el mapa los datos por defecto
+export async function showDenue() {
+  setMsg("Cargando datos del DENUE…", false);
+  try {
+    loadRows(await loadDenue(), "denue");
+  } catch (e) {
+    setMsg(e.message, true);
+  }
+}
 
 function loadText(text, name) {
   try {
@@ -45,7 +55,7 @@ export function initDataInput() {
     if (!box.hidden) $("paste").focus();
   };
   $("loadPaste").onclick = () => loadText($("paste").value, "datos pegados");
-  $("loadSample").onclick = () => loadRows(sample(), "sample");
+  $("loadDenue").onclick = showDenue;
   $("copyFmt").onclick = copyTemplate;
 
   const app = $("app");
