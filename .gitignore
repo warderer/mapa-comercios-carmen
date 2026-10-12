@@ -1,0 +1,10 @@
+node_modules/
+dist/
+
+# Claves locales
+.env
+.env.*
+!.env.example
+
+# Artefacto original de un solo archivo (trae la API key escrita en el código)
+legacy/
