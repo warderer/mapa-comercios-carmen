@@ -32,7 +32,7 @@ h1{font-family:var(--display);font-weight:700;font-size:1.55rem;line-height:1.1;
 .themebtn:hover{background:rgba(255,255,255,.14)}
 .themebtn:focus-visible{outline-color:#fff}
 .themebtn svg{width:18px;height:18px}
-.project{margin:12px 0 0;font-size:.8rem;line-height:1.4}
+.credits .project{margin:0 0 10px;font-size:.8rem;line-height:1.4;color:var(--fg)}
 .project span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600;margin-bottom:2px}
 .msg{font-size:.8rem;margin:8px 0 0;color:var(--muted)}
 .msg:empty{display:none}
@@ -102,6 +102,8 @@ label.chip.off .emo{opacity:.35}
 .note{position:absolute;left:12px;right:60px;top:12px;z-index:900;max-width:440px;font-size:.78rem;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;color:var(--muted)}
 .emoji-marker span{position:absolute;transform:translate(-50%,-50%);line-height:1;white-space:nowrap;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
 .emoji-marker span.sel{outline:2px solid var(--fg);outline-offset:2px;border-radius:50%}
+/* Durante la reproducción se ocultan los botones del mapa */
+.playing .fitbtn,.playing .leaflet-control-zoom{display:none}
 .fitbtn{position:absolute;right:12px;top:88px;z-index:900;background:var(--panel);font-size:.78rem;padding:5px 9px}
 
 @media (max-width:760px){

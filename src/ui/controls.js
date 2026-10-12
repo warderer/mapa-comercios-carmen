@@ -16,6 +16,7 @@ export function goYear(i) {
 export function stopPlay() {
   state.playing = false;
   clearTimeout(state.timer);
+  $("app").classList.remove("playing");
   $("play").innerHTML = ICON_PLAY;
   $("play").setAttribute("aria-label", "Reproducir animación");
 }
@@ -30,6 +31,7 @@ function tick() {
 function togglePlay() {
   if (state.playing) { stopPlay(); return; }
   state.playing = true;
+  $("app").classList.add("playing"); // oculta los botones del mapa (styles/main.css)
   $("play").innerHTML = ICON_PAUSE;
   $("play").setAttribute("aria-label", "Pausar animación");
   // Desde el último año, vuelve a empezar

@@ -109,7 +109,8 @@ export function renderMarkers(animate = true) {
     const t0 = performance.now();
     anim = { step, raf: 0 };
     const loop = now => {
-      const p = Math.min(1, (now - t0) / duration);
+      // La marca de tiempo del cuadro puede ser anterior a t0; sin el límite inferior los radios se disparan
+      const p = Math.max(0, Math.min(1, (now - t0) / duration));
       step(p);
       if (p < 1) anim.raf = requestAnimationFrame(loop);
       else anim = null;
