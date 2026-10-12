@@ -1,5 +1,5 @@
 /* Leaflet mínimo: sustituye a leaflet/dist/leaflet.css (que no se importa) y usa las variables del tema */
-.leaflet-pane,.leaflet-tile,.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,.leaflet-layer,.leaflet-zoom-box{position:absolute;left:0;top:0}
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,.leaflet-layer,.leaflet-zoom-box{position:absolute;left:0;top:0}
 .leaflet-container{overflow:hidden;font-family:var(--body);-webkit-tap-highlight-color:transparent;touch-action:none}
 .leaflet-tile{user-select:none;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}
 .leaflet-container img.leaflet-tile{max-width:none!important;max-height:none!important;width:256px;height:256px}

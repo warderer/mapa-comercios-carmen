@@ -1,4 +1,4 @@
-// Lecturas del panel: año, cambio contra el año anterior, conteo por categoría y barras.
+// Lecturas del panel: año, cambio contra el año anterior, conteo por categoría y actividad, y barras.
 import { LOCALE } from "../config.js";
 import { state, visible } from "../state.js";
 import { $ } from "../utils/dom.js";
@@ -22,8 +22,12 @@ export function updateReadouts(target) {
       " vs " + state.years[state.yi - 1];
   } else delta.innerHTML = total + " en el primer año";
 
-  const byCat = {};
-  target.forEach(r => { byCat[r.cat] = (byCat[r.cat] || 0) + 1; });
-  document.querySelectorAll("#chips .n").forEach(el => { el.textContent = byCat[el.dataset.cat] || 0; });
+  // Conteo por categoría y por actividad; cada casilla del filtro lleva su clave en data-key
+  const count = {};
+  target.forEach(r => {
+    count[r.cat] = (count[r.cat] || 0) + 1;
+    count[r.leaf] = (count[r.leaf] || 0) + 1;
+  });
+  document.querySelectorAll("#chips .n").forEach(el => { el.textContent = count[el.dataset.key] || 0; });
   drawBars();
 }

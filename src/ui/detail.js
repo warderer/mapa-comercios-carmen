@@ -31,7 +31,7 @@ export function select(key) {
   detail.hidden = false;
   detail.innerHTML = `<p class="lbl">Comercio seleccionado <button id="closeD">Cerrar</button></p><h2>${esc(cur.nombre)}</h2>
    <div class="row" style="gap:6px;font-size:.85rem"><i class="dot" style="background:${state.color[cur.cat]}"></i>${esc(cur.cat)}</div>
-   <dl><dt>Años</dt><dd>${rangeText(all.map(a => a.year))}</dd><dt>Coordenadas</dt><dd style="font-family:var(--mono)">${cur.lat.toFixed(5)}, ${cur.lng.toFixed(5)}</dd>
+   <dl>${cur.sub ? `<dt>Actividad</dt><dd>${esc(cur.sub)}</dd>` : ""}<dt>Años</dt><dd>${rangeText(all.map(a => a.year))}</dd><dt>Coordenadas</dt><dd style="font-family:var(--mono)">${cur.lat.toFixed(5)}, ${cur.lng.toFixed(5)}</dd>
    ${moved ? "<dt>Domicilio</dt><dd>Cambió de ubicación en el periodo</dd>" : ""}<dt>ID</dt><dd style="font-family:var(--mono)">${esc(key)}</dd>${extra}</dl>`;
   $("closeD").onclick = () => { hideDetail(); restyleMarkers(); };
   restyleMarkers();

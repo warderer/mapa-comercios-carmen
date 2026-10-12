@@ -29,6 +29,7 @@ src/
   markers.js          marcadores y su animación
   render.js           repinta marcadores y lecturas
   dataset.js          carga un conjunto de datos en el mapa
+  emoji.js            emoji de cada actividad o categoría
   theme.js            repintado al cambiar tema claro/oscuro
   data/               datos del DENUE, lector de CSV y contorno de la costa
   ui/                 controles, filtro por categoría, barras, lecturas, detalle, entrada de datos

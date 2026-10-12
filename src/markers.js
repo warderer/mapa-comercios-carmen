@@ -1,10 +1,12 @@
 // Marcadores de los comercios y su animación al cambiar de año (aparecen, desaparecen o se mueven).
 import L from "leaflet";
+import { emojiFor } from "./emoji.js";
 import { map } from "./map.js";
 import { state, visible } from "./state.js";
 import { cssVar, esc } from "./utils/dom.js";
 
-// key -> { m: circleMarker, cur: {lat, lng, r, o} (posición, radio y opacidad actuales), row }
+// key -> { m: capa de Leaflet, cur: {lat, lng, r, o} (posición, radio y opacidad actuales), row }
+// En modo emoji la capa es un marcador con un <span> (o.span); si no, un circleMarker.
 export const markers = new Map();
 let anim = null;
 let clickHandler = () => {};
@@ -14,22 +16,39 @@ export function onMarkerClick(handler) { clickHandler = handler; }
 const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const radius = () => Math.max(3, Math.min(9, map.getZoom() - 8));
+const EMOJI_SCALE = 3; // tamaño del emoji en px por cada px de radio del círculo equivalente
+
+// En modo acumulado, los que no se registraron en el año actual se ven atenuados
+const isOlder = o => state.mode === "acum" && o.row.year < state.years[state.yi];
 
 function styleFor(o) {
-  // En modo acumulado, los que no se registraron en el año actual se ven atenuados
-  const older = state.mode === "acum" && o.row.year < state.years[state.yi];
   return {
     radius: o.cur.r,
     color: cssVar("--stroke"),
     weight: o.cur.r > 2 ? 1.2 : 0,
     fillColor: state.color[o.row.cat],
-    fillOpacity: o.cur.o * (older ? .45 : .92),
+    fillOpacity: o.cur.o * (isOlder(o) ? .45 : .92),
     opacity: o.cur.o,
     ...(state.selected === o.row.key ? { weight: 3, color: cssVar("--fg") } : {}),
   };
 }
 
-export function restyleMarkers() { markers.forEach(o => o.m.setStyle(styleFor(o))); }
+// Lleva la capa a la posición, tamaño y estilo de o.cur
+function paint(o) {
+  const c = o.cur;
+  o.m.setLatLng([c.lat, c.lng]);
+  if (o.span) {
+    o.span.textContent = emojiFor(o.row.sub, o.row.cat);
+    o.span.style.fontSize = c.r * EMOJI_SCALE + "px";
+    o.span.style.opacity = c.o * (isOlder(o) ? .45 : 1);
+    o.span.classList.toggle("sel", state.selected === o.row.key);
+  } else {
+    o.m.setStyle(styleFor(o));
+    o.m.setRadius(c.r);
+  }
+}
+
+export function restyleMarkers() { markers.forEach(paint); }
 
 function finishAnim() {
   if (!anim) return;
@@ -46,8 +65,14 @@ export function clearMarkers() {
 
 function createMarker(key, row) {
   const o = { cur: { lat: row.lat, lng: row.lng, r: 0, o: 0 }, row };
-  o.m = L.circleMarker([row.lat, row.lng], { radius: 0, fillOpacity: 0, opacity: 0 }).addTo(map);
-  o.m.bindTooltip(() => esc(o.row.nombre) + ' <span style="color:var(--muted)">· ' + esc(o.row.cat) + "</span>", { direction: "top", offset: [0, -6] });
+  if (state.emoji) {
+    const icon = L.divIcon({ className: "emoji-marker", html: "<span></span>", iconSize: [0, 0] });
+    o.m = L.marker([row.lat, row.lng], { icon, keyboard: false }).addTo(map);
+    o.span = o.m.getElement().firstChild;
+  } else {
+    o.m = L.circleMarker([row.lat, row.lng], { radius: 0, fillOpacity: 0, opacity: 0 }).addTo(map);
+  }
+  o.m.bindTooltip(() => esc(o.row.nombre) + ' <span style="color:var(--muted)">· ' + esc(o.row.sub || o.row.cat) + "</span>", { direction: "top", offset: [0, state.emoji ? -10 : -6] });
   o.m.on("click", () => clickHandler(key));
   markers.set(key, o);
   return o;
@@ -71,9 +96,7 @@ export function renderMarkers(animate = true) {
     for (const t of tweens) {
       const c = t.o.cur;
       for (const k of ["lat", "lng", "r", "o"]) c[k] = t.from[k] + (t.to[k] - t.from[k]) * e;
-      t.o.m.setLatLng([c.lat, c.lng]);
-      t.o.m.setStyle(styleFor(t.o));
-      t.o.m.setRadius(c.r);
+      paint(t.o);
       if (p >= 1 && t.kill) {
         map.removeLayer(t.o.m);
         if (markers.get(t.key) === t.o) markers.delete(t.key);
@@ -99,5 +122,5 @@ export function renderMarkers(animate = true) {
 map.on("zoomend", () => {
   finishAnim();
   const R = radius();
-  markers.forEach(o => { o.cur.r = R; o.m.setRadius(R); });
+  markers.forEach(o => { o.cur.r = R; paint(o); });
 });

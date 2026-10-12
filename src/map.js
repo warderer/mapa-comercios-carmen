@@ -49,9 +49,9 @@ export function refreshBasemap() {
   if (tilesOk) addTiles();
 }
 
-// Encuadra los comercios de las categorías activas
+// Encuadra los comercios marcados en el filtro
 export function fit() {
-  const pts = state.rows.filter(r => state.active.has(r.cat)).map(r => [r.lat, r.lng]);
+  const pts = state.rows.filter(r => state.active.has(r.leaf)).map(r => [r.lat, r.lng]);
   if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(.12), { maxZoom: 16 });
   else map.setView(CENTER, DEFAULT_ZOOM);
 }

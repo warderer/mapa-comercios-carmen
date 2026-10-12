@@ -3,7 +3,6 @@ import url from "./comercios-cdc-denue.json?url";
 
 // Campos del registro que se muestran en el detalle, con su etiqueta
 const EXTRA = {
-  actividad: "Actividad",
   razon_social: "Razón social",
   personal: "Personal",
   asentamiento: "Asentamiento",
@@ -18,6 +17,7 @@ function toRow(r, sectores) {
     key: String(r.id),
     nombre: r.nombre,
     cat: sectores[r.sector]?.etiqueta || r.sector,
+    sub: r.actividad,
     year: r.anio,
     lat: r.lat,
     lng: r.lng,
