@@ -1,6 +1,6 @@
 // Mapa Leaflet: mosaicos de CARTO u OpenStreetMap y, si no cargan, un contorno simplificado de la costa.
 import L from "leaflet";
-import { CARTO_KEY, CENTER, DEFAULT_ZOOM } from "./config.js";
+import { CARTO_KEY, CENTER, DEFAULT_ZOOM, FIT_MAX_ZOOM, FIT_ZOOM_BOOST } from "./config.js";
 import LAND from "./data/land.json";
 import { state } from "./state.js";
 import { $, cssVar, isDark } from "./utils/dom.js";
@@ -51,8 +51,9 @@ export function refreshBasemap() {
 // Encuadra los comercios marcados en el filtro
 export function fit() {
   const pts = state.rows.filter(r => state.active.has(r.leaf)).map(r => [r.lat, r.lng]);
-  if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(.12), { maxZoom: 16 });
-  else map.setView(CENTER, DEFAULT_ZOOM);
+  if (!pts.length) { map.setView(CENTER, DEFAULT_ZOOM); return; }
+  const bounds = L.latLngBounds(pts);
+  map.setView(bounds.getCenter(), Math.min(FIT_MAX_ZOOM, map.getBoundsZoom(bounds.pad(.12)) + FIT_ZOOM_BOOST));
 }
 
 addTiles();
