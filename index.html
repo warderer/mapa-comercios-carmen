@@ -6,12 +6,16 @@
 <title>Comercios de Ciudad del Carmen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+// Aplica el tema guardado antes de pintar, para que no parpadee
+try { const t = localStorage.getItem("tema"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (_) {}
+</script>
 </head>
 <body>
 <div class="app" id="app">
   <aside class="panel">
     <header>
-      <div class="brand"><img src="/src/assets/logo-unacar-blanco.png" alt="UNACAR, Universidad Autónoma del Carmen" width="720" height="165"></div>
+      <div class="brand"><img src="/src/assets/logo-unacar-blanco.png" alt="UNACAR, Universidad Autónoma del Carmen" width="720" height="165"><button class="themebtn" id="theme" type="button"></button></div>
       <h1>Comercios de Ciudad del Carmen</h1>
       <p class="sub" id="subtitle">Cómo cambia el mapa de negocios año con año.</p>
       <p class="project"><span>Proyecto de investigación</span> Crisis y oportunidad: Inteligencia de mercado, economía social y transformación digital para micro y pequeñas empresas de Ciudad del Carmen</p>

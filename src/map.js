@@ -1,9 +1,9 @@
 // Mapa Leaflet: mosaicos de CARTO u OpenStreetMap y, si no cargan, un contorno simplificado de la costa.
 import L from "leaflet";
-import { CARTO_KEY, CENTER, DEFAULT_ZOOM, LIGHT_BG } from "./config.js";
+import { CARTO_KEY, CENTER, DEFAULT_ZOOM } from "./config.js";
 import LAND from "./data/land.json";
 import { state } from "./state.js";
-import { $, cssVar } from "./utils/dom.js";
+import { $, cssVar, isDark } from "./utils/dom.js";
 
 export const map = L.map("map", { preferCanvas: true, zoomControl: false, minZoom: 10, maxZoom: 18 }).setView(CENTER, DEFAULT_ZOOM);
 L.control.zoom({ position: "topright" }).addTo(map);
@@ -13,7 +13,6 @@ const HIDDEN = { fillOpacity: 0, opacity: 0 };
 const landStyle = () => ({ color: cssVar("--land-edge"), weight: 1, fillColor: cssVar("--land"), fillOpacity: 1, opacity: 1 });
 const landLayer = L.geoJSON(LAND, { interactive: false, style: landStyle }).addTo(map);
 
-const isDark = () => cssVar("--bg").toLowerCase() !== LIGHT_BG;
 let tilesOk = false, tiles = null;
 
 function addTiles() {
