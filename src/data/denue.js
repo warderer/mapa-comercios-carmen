@@ -25,12 +25,10 @@ function toRow(r, sectores) {
   };
 }
 
-let cache = null;
-
 // Devuelve una fila por establecimiento y año. El DENUE se levanta por semestre:
 // si un establecimiento aparece en los dos semestres de un año, se usa el más reciente.
 export function loadDenue() {
-  cache ??= fetch(url)
+  return fetch(url)
     .then(res => {
       if (!res.ok) throw new Error("No se pudieron cargar los datos del DENUE (" + res.status + ").");
       return res.json();
@@ -43,5 +41,4 @@ export function loadDenue() {
       }
       return [...latest.values()].map(r => toRow(r, meta.sectores));
     });
-  return cache;
 }

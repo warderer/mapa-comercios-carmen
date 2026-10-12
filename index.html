@@ -11,8 +11,11 @@
 <div class="app" id="app">
   <aside class="panel">
     <header>
+      <div class="brand"><img src="/src/assets/logo-unacar-blanco.png" alt="UNACAR, Universidad Autónoma del Carmen" width="720" height="165"></div>
       <h1>Comercios de Ciudad del Carmen</h1>
       <p class="sub" id="subtitle">Cómo cambia el mapa de negocios año con año.</p>
+      <p class="project"><span>Proyecto de investigación</span> Crisis y oportunidad: Inteligencia de mercado, economía social y transformación digital para micro y pequeñas empresas de Ciudad del Carmen</p>
+      <p class="msg" id="msg" role="status"></p>
     </header>
 
     <section aria-label="Año">
@@ -38,42 +41,19 @@
       <label class="opt"><input type="checkbox" id="emoji"> Mostrar emojis en lugar de círculos</label>
     </section>
 
-    <section aria-label="Datos">
-      <p class="lbl">Tus datos</p>
-      <div class="drop">
-        <p id="srcline"></p>
-        <div class="row">
-          <label class="btn primary" for="file">Subir CSV</label>
-          <input type="file" id="file" accept=".csv,.txt,text/csv" hidden>
-          <button class="btn" id="showPaste">Pegar datos</button>
-          <button class="btn" id="fit">Encuadrar</button>
-        </div>
-        <div id="pasteBox" hidden>
-          <textarea id="paste" spellcheck="false" placeholder="id,nombre,categoria,anio,lat,lng"></textarea>
-          <div class="row" style="margin-top:8px"><button class="btn primary" id="loadPaste">Cargar en el mapa</button><button class="btn" id="loadDenue">Volver a los datos del DENUE</button></div>
-        </div>
-        <p class="msg" id="msg" role="status"></p>
-      </div>
-      <details style="margin-top:10px">
-        <summary style="cursor:pointer;font-size:.82rem;color:var(--muted)">Formato del CSV</summary>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:.82rem">
-          <p style="margin:0">Una fila por comercio y por año en que existió. Si el comercio aparece en varios años, repite la fila con el mismo <code>id</code>; si cambió de domicilio, pon las nuevas coordenadas y el mapa lo verá moverse.</p>
-          <pre class="fmt" id="fmt">id,nombre,categoria,anio,lat,lng
-c001,Fonda La Ceiba,Restaurantes y fondas,2021,18.6560,-91.8150
-c001,Fonda La Ceiba,Restaurantes y fondas,2022,18.6560,-91.8150
-c002,Farmacia del Malecón,Farmacias,2022,18.6611,-91.8034</pre>
-          <div class="row"><button class="btn" id="copyFmt">Copiar plantilla</button></div>
-          <p style="margin:0;color:var(--muted)">También reconoce <code>año</code>/<code>year</code>, <code>tipo</code>/<code>giro</code>/<code>sector</code>, <code>latitud</code>/<code>longitud</code>. Con una columna <code>subcategoria</code> o <code>actividad</code>, el filtro se desglosa dentro de cada categoría. Separador coma o punto y coma. Las demás columnas se muestran en el detalle.</p>
-        </div>
-      </details>
-    </section>
-
     <section class="detail" id="detail" hidden aria-live="polite"></section>
+
+    <footer class="credits">
+      <p><b>Responsable del proyecto:</b> Dr. Benjamín Tass Herrera.</p>
+      <p><b>Colaboradores:</b> Mtra. Patricia del Rosario Cerecedo Núñez, Dr. Hugo García Alvarez, Dr. César Octavio Guerra Guerrero, Dr. José Alonso Pérez Cruz, Mtra. Karime Pamela Mendoza Eligio, Mtra. Verónica del Carmen Salvador León y Mtra. Chuiná Estrellita Guadalupe Hernández Rosado.</p>
+      <p><b>Fuente de los datos:</b> DENUE, INEGI.</p>
+    </footer>
   </aside>
 
   <div class="mapwrap">
     <div id="map" aria-label="Mapa de Ciudad del Carmen"></div>
     <div class="yearbig" id="yearbig"></div>
+    <button class="btn fitbtn" id="fit" title="Volver a encuadrar todos los comercios">Encuadrar</button>
     <div class="coords" id="coords">18.6500, -91.8200</div>
     <div class="note" id="note" hidden></div>
   </div>

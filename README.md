@@ -1,6 +1,6 @@
 # Comercios de Ciudad del Carmen
 
-Mapa interactivo que muestra cómo cambian los comercios de Ciudad del Carmen año con año, con los datos del DENUE (INEGI) o con un CSV propio de una fila por comercio y por año.
+Mapa interactivo que muestra cómo cambian los comercios de Ciudad del Carmen año con año, con los datos del DENUE (INEGI). Forma parte del proyecto de investigación «Crisis y oportunidad: Inteligencia de mercado, economía social y transformación digital para micro y pequeñas empresas de Ciudad del Carmen» de la UNACAR.
 
 ## Uso
 
@@ -28,10 +28,11 @@ src/
   map.js              mapa Leaflet, mosaicos y contorno de respaldo
   markers.js          marcadores y su animación
   render.js           repinta marcadores y lecturas
-  dataset.js          carga un conjunto de datos en el mapa
+  dataset.js          carga los datos en el mapa
   emoji.js            emoji de cada actividad o categoría
   theme.js            repintado al cambiar tema claro/oscuro
-  data/               datos del DENUE, lector de CSV y contorno de la costa
-  ui/                 controles, filtro por categoría, barras, lecturas, detalle, entrada de datos
+  data/               datos del DENUE y contorno de la costa
+  assets/             logotipo
+  ui/                 controles, filtro por categoría, barras, lecturas y detalle
   styles/             estilos de la página y estilos mínimos de Leaflet
 ```

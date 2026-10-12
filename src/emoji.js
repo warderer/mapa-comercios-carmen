@@ -7,16 +7,9 @@ const RULES = [
   [/afianzador/, "📜"],
   [/pension/, "🏦"],
   [/inversion/, "📈"],
-  [/financier|banco|credito/, "💰"],
+  [/financier/, "💰"],
   [/seguro/, "🛡️"],
   [/cafe|never|refresqu|soda/, "☕"],
-  [/restauran|fonda|cocina|comida|marisc|taquer|loncher/, "🍽️"],
-  [/farmacia|botica/, "💊"],
-  [/hotel|posada|hosped/, "🏨"],
-  [/abarrote|miscelanea|super|conveniencia|tienda/, "🛒"],
-  [/petrol|gasolin/, "⛽"],
-  [/hospital|clinica|consultorio|medic/, "🏥"],
-  [/escuela|colegio|educa/, "🎓"],
 ];
 const FALLBACK = "📍";
 
